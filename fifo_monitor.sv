@@ -19,22 +19,22 @@ class fifo_monitor extends uvm_monitor;
       
   virtual task run_phase(uvm_phase phase);
     forever begin
-      @(posedge vif.m_mp.clk)
-      if(vif.m_mp.m_cb.i_wren == 1)begin
+      @(posedge vif.monitor_mp.clk)
+      if(vif.monitor_mp.monitor_cb.i_wren == 1)begin
         $display("\nWR is high");
-        item_got.i_wrdata = vif.m_mp.m_cb.i_wrdata;
+        item_got.i_wrdata = vif.monitor_mp.monitor_cb.i_wrdata;
         item_got.i_wren = 'b1;
         item_got.i_rden = 'b0;
-        item_got.o_full = vif.m_mp.m_cb.o_full;
+        item_got.o_full = vif.monitor_mp.monitor_cb.o_full;
         item_got_port.write(item_got);
       end
-      else if(vif.m_mp.m_cb.i_rden == 1)begin
-        @(posedge vif.m_mp.clk)
+      else if(vif.monitor_mp.monitor_cb.i_rden == 1)begin
+        @(posedge vif.monitor_mp.clk)
         $display("\nRD is high");
-        item_got.o_rddata = vif.m_mp.m_cb.o_rddata;
+        item_got.o_rddata = vif.monitor_mp.monitor_cb.o_rddata;
         item_got.i_rden = 'b1;
         item_got.i_wren = 'b0;
-        item_got.o_empty = vif.m_mp.m_cb.o_empty;
+        item_got.o_empty = vif.monitor_mp.monitor_cb.o_empty;
         item_got_port.write(item_got);
       end
     end
