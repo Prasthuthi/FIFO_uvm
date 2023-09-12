@@ -39,5 +39,5 @@ modport driver_mp (input clk, rstn, clocking driver_cb);
     modport active_mon_mp (input clk, rstn, clocking active_mon_cb);
       modport passive_mon_mp (input clk, rstn, clocking passive_mon_cb);
     
-endinterface
+endinterface:fifo_interface
 
