@@ -8,7 +8,7 @@ interface fifo_interface(input clk,rstn);
     bit [127:0] o_rddata;
 
 clocking driver_cb @(posedge clk);
-    default input #0 output #0;
+    default input #1 output #1;
     output i_wren;
     output i_rden;
     output i_wrdata;
@@ -19,7 +19,19 @@ clocking driver_cb @(posedge clk);
     input o_rddata;
   endclocking
 
-clocking active_mon_cb @(posedge clk);
+    clocking monitor_cb @(posedge clk);
+    default input #1 output #1;
+    input i_wren;
+    input i_rden;
+    input i_wrdata;
+    input o_full;
+    input o_empty;
+    input o_alm_full;
+    input o_alm_empty;
+    input o_rddata;
+  endclocking
+  
+/*clocking active_mon_cb @(posedge clk);
    default input #0 output #0;
     input i_wren;
     input i_rden;
@@ -33,11 +45,12 @@ clocking active_mon_cb @(posedge clk);
     input o_alm_full;
    input o_alm_empty;
    input o_rddata;
-  endclocking
+  endclocking*/
 
 modport driver_mp (input clk, rstn, clocking driver_cb);
-    modport active_mon_mp (input clk, rstn, clocking active_mon_cb);
-      modport passive_mon_mp (input clk, rstn, clocking passive_mon_cb);
+   /* modport active_mon_mp (input clk, rstn, clocking active_mon_cb);
+      modport passive_mon_mp (input clk, rstn, clocking passive_mon_cb);*/
+    modport monitor_mp (input clk, rstn, clocking monitor_cb);
     
 endinterface:fifo_interface
 
