@@ -17,13 +17,13 @@ class fifo_scoreboard extends uvm_scoreboard;
     bit [127:0] dout;
     if(item_got.i_wren == 'b1)begin
       queue.push_back(item_got.i_wrdata);
-      `uvm_info("write Data", $sformatf("wr: %0b i_rden: %0b i_wrdata: %0h o_full: %0b",item_got.i_wren, item_got.i_rden,item_got.data_in, item_got.full), UVM_LOW);
+      `uvm_info("write Data", $sformatf("wr: %0b i_rden: %0b i_wrdata: %0h o_full: %0b",item_got.i_wren, item_got.i_rden,item_got.i_wrdata, item_got.o_full), UVM_LOW);
     end
-    else if (item_got.rd == 'b1)begin
+    else if (item_got.i_rden == 'b1)begin
       if(queue.size() >= 'd1)begin
-        examdata = queue.pop_front();
-        `uvm_info("Read Data", $sformatf("examdata: %0h data_out: %0h empty: %0b", examdata, item_got.data_out, item_got.empty), UVM_LOW);
-        if(examdata == item_got.data_out)begin
+        dout = queue.pop_front();
+        `uvm_info("Read Data", $sformatf("dout: %0h o_rddata: %0h o_empty: %0b", dout, item_got.o_rddata, item_got.o_empty), UVM_LOW);
+        if(dout == item_got.o_rddata)begin
           $display("-------- 		Pass! 		--------");
         end
         else begin
