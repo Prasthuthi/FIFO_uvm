@@ -38,7 +38,7 @@ uvm_analysis_imp#(fifo_seq_item, fifo_scoreboard) item_got_export;
         counter = counter--;
         testdata = check_fifo.pop_front();
         
-        `uvm_info("Read Data", $sformatf("testdata: %0h read data : %0h empty: %0b", testdata, item_got.i_rddata, item_got.o_empty), UVM_LOW);
+        `uvm_info("Read Data", $sformatf("testdata: %0h read data : %0h empty: %0b", testdata, item_got.o_rddata, item_got.o_empty), UVM_LOW);
         
         if(testdata == item_got.o_rddata)begin
           $display("--------MATCH SUCCESSFUL----------");
