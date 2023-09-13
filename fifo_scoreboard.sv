@@ -1,5 +1,5 @@
 class fifo_scoreboard extends uvm_scoreboard;
-uvm_analysis_imp#(fifo_sequence_item, fifo_scoreboard) item_got_export;
+uvm_analysis_imp#(fifo_seq_item, fifo_scoreboard) item_got_export;
 `uvm_component_utils(fifo_scoreboard)
   int counter;
 
@@ -13,7 +13,7 @@ uvm_analysis_imp#(fifo_sequence_item, fifo_scoreboard) item_got_export;
   endfunction
     int check_fifo[$];
   
-  function void write(input f_sequence_item item_got);
+  function void write(input fifo_seq_item item_got);
     bit [127:0] testdata;
     if(item_got.i_wren == 'b1)begin
       if(check_fifo.size < 1023) begin
