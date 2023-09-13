@@ -20,7 +20,19 @@ class fifo_monitor extends uvm_monitor;
   virtual task run_phase(uvm_phase phase);
     forever begin
       @(posedge vif.monitor_mp.clk)
-      if((vif.monitor_mp.monitor_cb.i_rden == 1)&&(vif.monitor_mp.monitor_cb.i_wren == 0))begin
+      if((vif.monitor_mp.monitor_cb.i_wren == 1)&&(vif.monitor_mp.monitor_cb.i_rden == 0))begin
+        $display("\nwrite enable is high and read enable is low");
+        item_got.i_wrdata = vif.monitor_mp.monitor_cb.i_wrdata;
+        item_got.i_wren = 'b1;
+        item_got.i_rden = 'b0;
+        item_got.o_full = vif.monitor_mp.monitor_cb.o_full;
+        item_got.o_empty = vif.monitor_mp.monitor_cb.o_empty;
+        item_got.o_alm_full = vif.monitor_mp.monitor_cb.o_alm_full;
+        item_got.o_alm_empty = vif.monitor_mp.monitor_cb.o_alm_empty;
+        item_got_port.write(item_got);
+      end
+      
+     if((vif.monitor_mp.monitor_cb.i_rden == 1)&&(vif.monitor_mp.monitor_cb.i_wren == 0))begin
         @(posedge vif.monitor_mp.clk)
         $display("\nwrite enable is low and read enable is high");
         item_got.o_rddata = vif.monitor_mp.monitor_cb.o_rddata;
@@ -50,4 +62,3 @@ class fifo_monitor extends uvm_monitor;
   endtask
 endclass
 
-    
