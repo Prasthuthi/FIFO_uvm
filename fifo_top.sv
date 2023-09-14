@@ -18,7 +18,7 @@ module tb;
   
   fifo_interface tif(clk, rstn);
   
-  SYN_FIFO dut(.clk(tif.clk),
+  my_fifo dut(.clk(tif.clk),
                .rstn(tif.rstn),
                .i_wrdata(tif.i_wrdata),
                .i_wren(tif.i_wren),
