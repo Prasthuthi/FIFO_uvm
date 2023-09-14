@@ -14,7 +14,7 @@
   int check_fifo[$];
   
   function void write(input fifo_seq_item item_got);
-    bit [7:0] examdata;
+   bit [127:0] examdata;
     if(item_got.i_wren == 'b1)begin
       if(check_fifo.size()<1024) begin
         counter =counter ++;
